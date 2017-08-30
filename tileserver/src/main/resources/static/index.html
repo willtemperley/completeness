@@ -1,0 +1,69 @@
+<html>
+<head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <link rel="stylesheet" href="leaflet.css"/>
+    <script src="leaflet.js"></script>
+    <script src="L.Control.MousePosition.js"></script>
+    <link rel="stylesheet" href="L.Control.MousePosition.css"/>
+
+    <script src="world-countries.js"></script>
+
+    <script type="application/javascript" src="/geom/6"></script>
+
+
+    <style type="text/css">
+        body, #map {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    var mapOptions = {
+        center: new L.LatLng(0, 0),
+        zoom: 1,
+        tms: true,
+        crs: L.CRS.EPSG4326
+    };
+
+    var map = L.map('map', mapOptions);
+    L.control.mousePosition().addTo(map);
+
+
+
+//    var wmsLayer = L.tileLayer.wms('http://demo.opengeo.org/geoserver/ows?', {
+//        layers: 'nasa:bluemarble'
+//    }).addTo(map);
+
+    var tms_ne = L.tileLayer('http://demo.opengeo.org/geoserver/gwc/service/tms/1.0.0/ne%3Ane@EPSG%3A4326@jpeg/{z}/{x}/{y}.png', {
+        tms: true
+    }).addTo(map);
+
+//    var worldCountriesLayer = L.geoJson(worldCountriesData).addTo(map);
+//    var urlTemplate = 'http://services.arcgisonline.com/arcgis/rest/services/ESRI_Imagery_World_2D/MapServer/tile/{z}/{y}/{x}';
+//    new L.tileLayer(urlTemplate).addTo(map);
+
+//    new L.tileLayer("http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png").addTo(map);
+//    new L.tileLayer("http://hadoop-m2:8085/{z}/{x}/{y}", {
+//        layers: 'default',
+//        maxNativeZoom: 14,
+//        maxZoom: 18,
+//        tms: true
+//    }).addTo(map);
+
+    new L.tileLayer("http://hadoop-m2:8085/ras/{z}/{x}/{y}", {
+        layers: 'default',
+        maxNativeZoom: 14,
+        maxZoom: 18,
+        tms: true
+    }).addTo(map);
+
+    var mada = L.geoJson(madagascar).addTo(map);
+
+    map.setView([-27, 44], 14);
+
+</script>
+</body>
+</html>
